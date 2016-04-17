@@ -50,11 +50,11 @@
                 <% }%>
                 </select><br>
 
-                Ano:<input type="number" name="ano" value="<%=automovelDao.getObjetoSelecionado().getAno()== null ? ""
+                Ano:<input type="number" required="required" name="ano" value="<%=automovelDao.getObjetoSelecionado().getAno()== null ? ""
                         : automovelDao.getObjetoSelecionado().getAno()%>"  size="40"><br>
                 Estado atual:<input type="text" name="estado_atual" value="<%= automovelDao.getObjetoSelecionado().getEstadoAtual()== null ? ""
                         : automovelDao.getObjetoSelecionado().getEstadoAtual()%>"  size="40"><br>
-                KMs:<input type="number" name="km" value="<%=automovelDao.getObjetoSelecionado().getQuilometragem()== null ? ""
+                KMs:<input type="number" required="required" name="km" value="<%=automovelDao.getObjetoSelecionado().getQuilometragem()== null ? ""
                         : automovelDao.getObjetoSelecionado().getQuilometragem()%>"  size="40"><br>
                 
 
