@@ -5,7 +5,6 @@
  */
 package br.edu.ifsul.servlets;
 
-
 import br.edu.ifsul.dao.AutomovelDAO;
 import br.edu.ifsul.dao.MarcaDAO;
 import br.edu.ifsul.modelo.Automovel;
@@ -43,7 +42,7 @@ public class ServletAutomovel extends HttpServlet {
         if (daoMarca == null) {
             daoMarca = new MarcaDAO();
         }
-        
+
         String tela = "";
         String acao = request.getParameter("acao");
         if (acao == null) {
@@ -54,7 +53,7 @@ public class ServletAutomovel extends HttpServlet {
             dao.setMensagem("");
             tela = "formulario.jsp";
         } else if (acao.equals("alterar")) {
-            
+
             Integer id = Integer.parseInt(request.getParameter("id"));
             dao.setObjetoSelecionado(dao.localizar(id));
             dao.setMensagem("");
@@ -65,7 +64,7 @@ public class ServletAutomovel extends HttpServlet {
             if (obj != null) {
                 dao.remover(obj);
             }
-           
+
             tela = "listar.jsp";
         } else if (acao.equals("salvar")) {
             Integer id = null;
@@ -75,18 +74,28 @@ public class ServletAutomovel extends HttpServlet {
             } catch (Exception e) {
                 dao.setMensagem("erro ao converter id");
             }
-            
+
             try {
                 idMarca = Integer.parseInt(request.getParameter("idMarca"));
             } catch (Exception e) {
-                dao.setMensagem("erro ao converter id estado"+e.getMessage());
+                dao.setMensagem("erro ao converter id estado" + e.getMessage());
             }
-            
+
             dao.getObjetoSelecionado().setId(id);
-            dao.getObjetoSelecionado().setAno(Integer.parseInt(request.getParameter("ano")));
+            try {
+                dao.getObjetoSelecionado().setAno(Integer.parseInt(request.getParameter("ano")));
+            } catch (Exception e) {
+                System.out.println("erro: " + e.getMessage());
+            }
+
+            try {
+                dao.getObjetoSelecionado().setQuilometragem(Integer.parseInt(request.getParameter("km")));
+            } catch (Exception e) {
+                System.out.println("erro: " + e.getMessage());
+            }
             dao.getObjetoSelecionado().setEstadoAtual(request.getParameter("estado_atual"));
             dao.getObjetoSelecionado().setModelo(request.getParameter("modelo"));
-            dao.getObjetoSelecionado().setQuilometragem(Integer.parseInt(request.getParameter("km")));
+
             dao.getObjetoSelecionado().setMarca(daoMarca.localizar(idMarca));
 
             if (dao.validaObjeto(dao.getObjetoSelecionado())) {
